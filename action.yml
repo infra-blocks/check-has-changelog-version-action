@@ -9,6 +9,12 @@ inputs:
   version:
     description: The version to check against in the changelog.
     required: true
+
+outputs:
+  changelog-file:
+    description: The path to the changelog file used.
+    value: ${{ steps.parse-changelog.outputs.changelog-file }}
+
 runs:
   using: "composite"
   steps:
