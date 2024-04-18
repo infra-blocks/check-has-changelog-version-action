@@ -3,49 +3,36 @@
 [![Self Test](https://github.com/infrastructure-blocks/check-changelog-has-version-action/actions/workflows/self-test.yml/badge.svg)](https://github.com/infrastructure-blocks/check-changelog-has-version-action/actions/workflows/self-test.yml)
 [![Update From Template](https://github.com/infrastructure-blocks/check-changelog-has-version-action/actions/workflows/update-from-template.yml/badge.svg)](https://github.com/infrastructure-blocks/check-changelog-has-version-action/actions/workflows/update-from-template.yml)
 
-Upon creating a repository from this template:
-- Edit the action.yml to correspond to your new action
-- Edit the self-test workflow.
-- Document
+This action enforces that the changelog has a section for the version that is provided as an input. If it
+doesn't, the action fails.
+
+This can be useful, for example, when making sure developers add a changelog entry for a new
+version before releasing said version.
 
 ## Inputs
 
-|     Name      | Required | Description       |
-|:-------------:|:--------:|-------------------|
-| example-input |   true   | An example input. |
+|      Name      | Required | Description                                                                             |
+|:--------------:|:--------:|-----------------------------------------------------------------------------------------|
+| changelog-file |  false   | Where to find the changelog. Defaults to CHANGELOG.md                                   |
+|    version     |   true   | The version to find in the changelog. The action will fail when this version is absent. |
 
 ## Outputs
 
-|      Name      | Description        |
-|:--------------:|--------------------|
-| example-output | An example output. |
+N/A
 
 ## Permissions
 
-|     Scope     | Level | Reason   |
-|:-------------:|:-----:|----------|
-| pull-requests | read  | Because. |
+N/A
 
 ## Usage
 
 ```yaml
-name: Template Usage
-
-on:
-  push: ~
-
-# The required permissions.
-permissions:
-  pull-requests: read
-
-# The suggested concurrency controls.
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  example-job:
+  stuff:
     runs-on: ubuntu-22.04
     steps:
       - uses: infrastructure-blocks/check-changelog-has-version-action@v1
+        with:
+          changelog-file: MY-CHANGELOG.md
+          version: 1.0.0
 ```

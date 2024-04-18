@@ -13,12 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Invoke action
-        id: self-test
         uses: ./
         with:
-          example-input: Hello?
-      - name: Show outputs
-        env:
-          OUTPUTS: ${{ toJson(steps.self-test.outputs) }}
-        run: |
-          echo "${OUTPUTS}"
+          changelog-file: test/CHANGELOG.md
+          version: 1.0.0
