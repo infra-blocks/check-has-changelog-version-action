@@ -1,28 +1,27 @@
-name: Composite action template
+name: Check Changelog Has Version Action
 description: |
-  This action does nothing meaningful.
+  This action enforces that the changelog has a section for the version that is provided as an input.
 
 inputs:
-  example-input:
-    description: A useless input as an example
+  changelog-file:
+    description: The path to the changelog file.
+    required: false
+  version:
+    description: The version to check against in the changelog.
     required: true
-outputs:
-  example-output:
-    description: You know it.
-    value: ${{ steps.generate-output.outputs.example-output }}
 runs:
   using: "composite"
   steps:
+    - id: parse-changelog
+      uses: docker://public.ecr.aws/infrastructure-blocks/parse-changelog-action:v1
+      with:
+        changelog-file: ${{ inputs.changelog-file }}
     - shell: bash
+      env:
+        CHANGELOG_JSON: ${{ steps.parse-changelog.outputs.json }}
       run: |
         if test "${{ runner.debug }}" = "1"; then
           set -x
         fi
-        echo "here is your input: ${{ inputs.example-input }}."
-    - id: generate-output
-      shell: bash
-      run: |
-        if test "${{ runner.debug }}" = "1"; then
-          set -x
-        fi
-        echo "example-output=here is your output" >> ${GITHUB_OUTPUT}
+
+        echo ${CHANGELOG_JSON} | jq -e --arg version '${{ inputs.version }}' '.releases[] | select(.version == $version)' > /dev/null
