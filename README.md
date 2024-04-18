@@ -11,14 +11,17 @@ version before releasing said version.
 
 ## Inputs
 
-|      Name      | Required | Description                                                                             |
-|:--------------:|:--------:|-----------------------------------------------------------------------------------------|
-| changelog-file |  false   | Where to find the changelog. Defaults to CHANGELOG.md                                   |
-|    version     |   true   | The version to find in the changelog. The action will fail when this version is absent. |
+|      Name      | Required | Description                                                                                                                |
+|:--------------:|:--------:|----------------------------------------------------------------------------------------------------------------------------|
+| changelog-file |  false   | Where to find the changelog. See [parse-changelog-action](https://github.com/infrastructure-blocks/parse-changelog-action) |
+|    version     |   true   | The version to find in the changelog. The action will fail when this version is absent.                                    |
 
 ## Outputs
 
-N/A
+|      Name      | Description                                                                                                                      |
+|:--------------:|----------------------------------------------------------------------------------------------------------------------------------|
+| changelog-file | The effective changelog-file used. See [parse-changelog-action](https://github.com/infrastructure-blocks/parse-changelog-action) |
+
 
 ## Permissions
 

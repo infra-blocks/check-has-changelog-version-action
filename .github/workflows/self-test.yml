@@ -12,8 +12,20 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Invoke action
+      - id: self-test
+        name: Invoke action
         uses: ./
         with:
           changelog-file: test/CHANGELOG.md
           version: 1.0.0
+      - name: Show outputs
+        env:
+          OUTPUTS: ${{ toJson(steps.self-test.outputs) }}
+        run: |
+          echo "${OUTPUTS}"
+      - name: Check outputs
+        run: |
+          if test "${{ steps.self-test.outputs.changelog-file }}" != "test/CHANGELOG.md"; then
+            echo "Expected changelog-file to be 'test/CHANGELOG.md', but got '${{ steps.self-test.outputs.changelog-file }}'."
+            exit 1
+          fi
