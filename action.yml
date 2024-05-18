@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
     - id: parse-changelog
-      uses: docker://public.ecr.aws/infrastructure-blocks/parse-changelog-action:v1
+      uses: docker://public.ecr.aws/infra-blocks/parse-changelog-action:v1
       with:
         changelog-file: ${{ inputs.changelog-file }}
     - shell: bash
